@@ -143,21 +143,67 @@ is_valid_repo_slug() {
   [[ "$slug" =~ ^[^/[:space:]]+/[^/[:space:]]+$ ]]
 }
 
+list_writable_repos_for_user() {
+  local login="$1"
+  gh repo list "$login" \
+    --limit 200 \
+    --json nameWithOwner,viewerPermission \
+    --jq '.[] | select(.viewerPermission == "ADMIN" or .viewerPermission == "MAINTAIN" or .viewerPermission == "WRITE") | .nameWithOwner' \
+    2>/dev/null \
+    || true
+}
+
 prompt_repo_slug() {
   local default_repo="${1:-}"
-  local prompt answer
+  local login="${2:-}"
+  local prompt answer selected
+  local -a suggestions=()
+  local index raw_choice default_choice
+
+  if [[ -n "$login" ]]; then
+    while IFS= read -r selected; do
+      selected="$(trim_whitespace "$selected")"
+      [[ -n "$selected" ]] || continue
+      suggestions+=("$selected")
+    done < <(list_writable_repos_for_user "$login")
+  fi
+
+  if (( ${#suggestions[@]} > 0 )); then
+    printf '\n' >&2
+    printf '%s\n' "Detected writable repositories for ${login}:" >&2
+    for index in "${!suggestions[@]}"; do
+      printf '  %d) %s\n' "$((index + 1))" "${suggestions[$index]}" >&2
+    done
+    printf '%s\n' "You can select by number or enter OWNER/REPO manually." >&2
+  fi
+
   prompt="Repository to configure (OWNER/REPO)"
+  default_choice=""
   if [[ -n "$default_repo" ]]; then
     prompt="${prompt} (default: ${default_repo})"
+    default_choice="$default_repo"
+  elif (( ${#suggestions[@]} > 0 )); then
+    default_choice="${suggestions[0]}"
+    prompt="${prompt} (default: ${default_choice})"
   fi
   prompt="${prompt}: "
 
   while true; do
     read -r -p "$prompt" answer || return 1
     answer="$(trim_whitespace "$answer")"
+    if [[ "$answer" =~ ^[0-9]+$ ]] && (( ${#suggestions[@]} > 0 )); then
+      raw_choice="$answer"
+      if (( raw_choice >= 1 && raw_choice <= ${#suggestions[@]} )); then
+        answer="${suggestions[$((raw_choice - 1))]}"
+      else
+        printf '%s\n' "Selection out of range. Choose one of the listed numbers." >&2
+        continue
+      fi
+    fi
+
     if [[ -z "$answer" ]]; then
-      if [[ -n "$default_repo" ]]; then
-        answer="$default_repo"
+      if [[ -n "$default_choice" ]]; then
+        answer="$default_choice"
       else
         printf '%s\n' "A repository slug is required." >&2
         continue
@@ -559,7 +605,7 @@ run_online_setup() {
     target_repo="$BOOTSTRAP_SELECTED_FORK_REPO"
   else
     info "Using non-fork mode: target repository must be writable by the current gh account."
-    target_repo="$(prompt_repo_slug "$(detect_existing_fork_repo "$upstream_repo" "$login" || true)")"
+    target_repo="$(prompt_repo_slug "$(detect_existing_fork_repo "$upstream_repo" "$login" || true)" "$login")"
   fi
 
   default_branch="$(gh api "repos/${upstream_repo}" --jq .default_branch 2>/dev/null || true)"

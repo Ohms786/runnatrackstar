@@ -743,6 +743,47 @@ exit 0
                 py_calls = f.read()
             self.assertIn("/scripts/setup_auth.py --repo tester/existing-online", py_calls)
 
+    def test_bootstrap_online_mode_without_fork_can_select_repo_by_number(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            fake_bin, _, py_log = self._make_fake_bin(tmpdir)
+            run_dir = os.path.join(tmpdir, "runner")
+            os.makedirs(run_dir, exist_ok=True)
+
+            gh_log = os.path.join(tmpdir, "gh.log")
+            env = os.environ.copy()
+            env["PATH"] = f"{fake_bin}:{env['PATH']}"
+            env["FAKE_GIT_LOG"] = os.path.join(tmpdir, "git.log")
+            env["FAKE_GH_LOG"] = gh_log
+            env["FAKE_CURL_LOG"] = os.path.join(tmpdir, "curl.log")
+            env["FAKE_TAR_LOG"] = os.path.join(tmpdir, "tar.log")
+            env["FAKE_PY_LOG"] = py_log
+            env["FAKE_REPO_VIEW_FAIL_FOR"] = "tester/git-sweaty"
+            env["FAKE_GH_REPO_LIST_OUTPUT"] = "tester/repo-one\ntester/repo-two"
+
+            proc = subprocess.run(
+                ["bash", BOOTSTRAP_PATH],
+                input="2\nn\n2\n",
+                text=True,
+                capture_output=True,
+                cwd=run_dir,
+                env=env,
+                check=False,
+            )
+            self.assertEqual(proc.returncode, 0, msg=f"{proc.stdout}\n{proc.stderr}")
+
+            output = f"{proc.stdout}\n{proc.stderr}"
+            self.assertIn("Detected writable repositories", output)
+            self.assertIn("2) tester/repo-two", output)
+
+            with open(gh_log, "r", encoding="utf-8") as f:
+                gh_calls = f.read()
+            self.assertIn("repo view tester/repo-two", gh_calls)
+            self.assertIn("api repos/tester/repo-two --jq .permissions.push", gh_calls)
+
+            with open(py_log, "r", encoding="utf-8") as f:
+                py_calls = f.read()
+            self.assertIn("/scripts/setup_auth.py --repo tester/repo-two", py_calls)
+
     def test_bootstrap_online_mode_without_fork_requires_writable_repo(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             fake_bin, _, py_log = self._make_fake_bin(tmpdir)
