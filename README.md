@@ -40,6 +40,8 @@ This command will guide you through:
    ./scripts/bootstrap.sh
    ```
 
+#### For both options:
+
 Follow the terminal prompts to choose a source and unit preference:
 - `strava` - terminal will link to [Strava API application](https://www.strava.com/settings/api).
    - Create an application first and set **Authorization Callback Domain** to `localhost`.
