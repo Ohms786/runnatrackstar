@@ -1204,7 +1204,7 @@ def _resolve_week_start(args: argparse.Namespace, interactive: bool, repo: str) 
 
     existing = _existing_dashboard_week_start(repo)
     if interactive:
-        return _prompt_week_start(existing or DEFAULT_WEEK_START)
+        return _prompt_week_start(DEFAULT_WEEK_START)
 
     return existing or DEFAULT_WEEK_START
 

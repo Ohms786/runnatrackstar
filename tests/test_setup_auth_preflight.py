@@ -224,7 +224,7 @@ class SetupAuthDispatchTests(unittest.TestCase):
             value = setup_auth._resolve_week_start(args, interactive=False, repo="owner/repo")
         self.assertEqual(value, "monday")
 
-    def test_resolve_week_start_interactive_uses_existing_value_as_default(self) -> None:
+    def test_resolve_week_start_interactive_defaults_to_sunday_option(self) -> None:
         args = Namespace(week_start=None)
         with (
             mock.patch("setup_auth._existing_dashboard_week_start", return_value="monday"),
@@ -232,7 +232,7 @@ class SetupAuthDispatchTests(unittest.TestCase):
         ):
             value = setup_auth._resolve_week_start(args, interactive=True, repo="owner/repo")
         self.assertEqual(value, "sunday")
-        prompt_mock.assert_called_once_with("monday")
+        prompt_mock.assert_called_once_with("sunday")
 
     def test_normalize_strava_profile_url_accepts_strava_host(self) -> None:
         value = setup_auth._normalize_strava_profile_url("www.strava.com/athletes/123")
