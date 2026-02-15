@@ -456,9 +456,15 @@ function buildSectionLayoutPlan(list) {
     if (graphRailWidth > 0 && totalFrequencyGraphWidth > 0) {
       const totalGap = Math.max(0, graphRailWidth - totalFrequencyGraphWidth);
       if (graphCount > 1) {
-        // Fill the entire shared rail by distributing gap width between frequency columns.
-        frequencyGap = totalGap / (graphCount - 1);
-        frequencyPadRight = 0;
+        const gapCount = graphCount - 1;
+        const desiredTrailingPad = isNarrowLayoutViewport()
+          ? 0
+          : readCssVar("--year-grid-pad-right", 0, frequencyCard);
+        const trailingPad = Math.max(0, Math.min(totalGap, desiredTrailingPad));
+        const distributableGap = Math.max(0, totalGap - trailingPad);
+        // Reserve trailing right gutter first so the third graph rail stays aligned with yearly rails.
+        frequencyGap = distributableGap / gapCount;
+        frequencyPadRight = trailingPad;
       } else {
         frequencyPadRight = totalGap;
       }
