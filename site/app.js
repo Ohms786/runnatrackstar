@@ -331,16 +331,8 @@ function syncHeaderLinkPlacement() {
   }
 
   if (!stravaProfileLink || !headerMeta) return;
-  const placeStravaOnLeft = !stravaProfileLink.hidden;
-  if (placeStravaOnLeft) {
-    if (stravaProfileLink.parentElement !== headerMeta) {
-      headerMeta.appendChild(stravaProfileLink);
-    }
-    return;
-  }
-
-  if (stravaProfileLink.parentElement !== headerLinks) {
-    headerLinks.appendChild(stravaProfileLink);
+  if (stravaProfileLink.parentElement !== headerMeta) {
+    headerMeta.appendChild(stravaProfileLink);
   }
 }
 
