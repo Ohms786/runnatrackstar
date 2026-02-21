@@ -1961,5 +1961,18 @@
     "start_date_local": "2026-02-19T21:16:04Z",
     "type": "Soccer",
     "year": 2026
+  },
+  {
+    "date": "2026-02-20",
+    "distance": 0.0,
+    "elevation_gain": 0.0,
+    "id": "17465672508",
+    "moving_time": 4741.0,
+    "name": "Night Weight Training - Pull",
+    "raw_activity_type": "WeightTraining",
+    "raw_type": "WeightTraining",
+    "start_date_local": "2026-02-20T21:18:10Z",
+    "type": "WeightTraining",
+    "year": 2026
   }
 ]
