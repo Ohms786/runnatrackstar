@@ -1987,5 +1987,18 @@
     "start_date_local": "2026-02-23T12:17:41Z",
     "type": "Run",
     "year": 2026
+  },
+  {
+    "date": "2026-02-23",
+    "distance": 0.0,
+    "elevation_gain": 0.0,
+    "id": "17499510657",
+    "moving_time": 4638.0,
+    "name": "Night Weight Training - Legs",
+    "raw_activity_type": "WeightTraining",
+    "raw_type": "WeightTraining",
+    "start_date_local": "2026-02-23T21:23:39Z",
+    "type": "WeightTraining",
+    "year": 2026
   }
 ]
