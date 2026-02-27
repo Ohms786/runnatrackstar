@@ -1394,6 +1394,15 @@
       "type": "WeightTraining",
       "url": "https://www.strava.com/activities/17524057791",
       "year": 2026
+    },
+    {
+      "date": "2026-02-26",
+      "hour": 21,
+      "name": "Night Football (Soccer)",
+      "subtype": "Soccer",
+      "type": "Soccer",
+      "url": "https://www.strava.com/activities/17535424342",
+      "year": 2026
     }
   ],
   "aggregates": {
@@ -2642,6 +2651,15 @@
           "distance": 4409.8,
           "elevation_gain": 0.0,
           "moving_time": 4203.0
+        },
+        "2026-02-26": {
+          "activity_ids": [
+            "17535424342"
+          ],
+          "count": 1,
+          "distance": 4415.8,
+          "elevation_gain": 0.0,
+          "moving_time": 4194.0
         }
       },
       "WeightTraining": {
@@ -2749,7 +2767,7 @@
       }
     }
   },
-  "generated_at": "2026-02-26T18:05:27.359156+00:00",
+  "generated_at": "2026-02-27T17:01:22.350152+00:00",
   "other_bucket": "OtherSports",
   "profile_url": "https://www.strava.com/athletes/129122933",
   "repo": "Ohms786/git-sweaty",
