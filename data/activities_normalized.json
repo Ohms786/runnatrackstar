@@ -2117,5 +2117,31 @@
     "start_date_local": "2026-03-11T11:53:32Z",
     "type": "Walk",
     "year": 2026
+  },
+  {
+    "date": "2026-03-13",
+    "distance": 0.0,
+    "elevation_gain": 0.0,
+    "id": "17712803876",
+    "moving_time": 4250.0,
+    "name": "Night Weight Training - Push/Pull",
+    "raw_activity_type": "WeightTraining",
+    "raw_type": "WeightTraining",
+    "start_date_local": "2026-03-13T21:27:04Z",
+    "type": "WeightTraining",
+    "year": 2026
+  },
+  {
+    "date": "2026-03-14",
+    "distance": 4210.6,
+    "elevation_gain": 24.0,
+    "id": "17720751187",
+    "moving_time": 2152.0,
+    "name": "Afternoon Run - Interval",
+    "raw_activity_type": "Run",
+    "raw_type": "Run",
+    "start_date_local": "2026-03-14T14:45:00Z",
+    "type": "Run",
+    "year": 2026
   }
 ]

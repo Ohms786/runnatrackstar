@@ -1466,6 +1466,24 @@
       "type": "Walk",
       "url": "https://www.strava.com/activities/17684692962",
       "year": 2026
+    },
+    {
+      "date": "2026-03-13",
+      "hour": 21,
+      "name": "Night Weight Training - Push/Pull",
+      "subtype": "WeightTraining",
+      "type": "WeightTraining",
+      "url": "https://www.strava.com/activities/17712803876",
+      "year": 2026
+    },
+    {
+      "date": "2026-03-14",
+      "hour": 14,
+      "name": "Afternoon Run - Interval",
+      "subtype": "Run",
+      "type": "Run",
+      "url": "https://www.strava.com/activities/17720751187",
+      "year": 2026
     }
   ],
   "aggregates": {
@@ -2711,6 +2729,15 @@
           "distance": 3450.9,
           "elevation_gain": 0.0,
           "moving_time": 1625.0
+        },
+        "2026-03-14": {
+          "activity_ids": [
+            "17720751187"
+          ],
+          "count": 1,
+          "distance": 4210.6,
+          "elevation_gain": 24.0,
+          "moving_time": 2152.0
         }
       },
       "Soccer": {
@@ -2853,6 +2880,15 @@
           "distance": 0.0,
           "elevation_gain": 0.0,
           "moving_time": 3677.0
+        },
+        "2026-03-13": {
+          "activity_ids": [
+            "17712803876"
+          ],
+          "count": 1,
+          "distance": 0.0,
+          "elevation_gain": 0.0,
+          "moving_time": 4250.0
         }
       },
       "Workout": {
@@ -2895,7 +2931,7 @@
       }
     }
   },
-  "generated_at": "2026-03-13T17:06:57.511578+00:00",
+  "generated_at": "2026-03-14T15:54:16.263281+00:00",
   "other_bucket": "OtherSports",
   "profile_url": "https://www.strava.com/athletes/129122933",
   "repo": "Ohms786/git-sweaty",
